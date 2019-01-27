@@ -16,3 +16,8 @@ Lambda function to search for an instrument in the backend ElasticSearch databas
 > aws lambda invoke --function-name "SearchFunction" --endpoint-url "http://127.0.0.1:3001" --no-verify-ssl /tmp/out.txt
 * starts locally the SearchFunction with the api gateway in front (url: http://127.0.0.1:3000/smf/instrument ) : 
 > sam local start-api [--template-name template.yaml]
+
+## Maven Integration tests
+* starts a local instance of the lambdas and execute integration tests on it
+> mvn integration-test
+* next step: start an instance of the api gateway and do integration tests on lambda (direct access) and api gateway
