@@ -12,5 +12,27 @@
     <groupId>com.jdm.aws.smf.functions</groupId>
     <artifactId>search</artifactId>
 
+    <properties>
+        <lambda.name>search</lambda.name>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-lambda-java-core</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.symphonia</groupId>
+            <artifactId>lambda-logging</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+
 
 </project>
