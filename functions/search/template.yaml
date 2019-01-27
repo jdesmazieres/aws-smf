@@ -12,7 +12,7 @@ Resources:
             Ref: AWS::StackName
         paths:
           /smf/instrument:
-            get:
+            any:
               x-amazon-apigateway-integration:
                 httpMethod: ANY
                 type: aws_proxy
@@ -27,6 +27,7 @@ Resources:
       Timeout: 60
       CodeUri: ./target/search.jar
       MemorySize: 128
+      Role: smf-query
       Policies:
         - AWSLambdaBasicExecutionRole
 
