@@ -11,7 +11,7 @@ Resources:
           title:
             Ref: AWS::StackName
         paths:
-          /smf/instrument:
+          /smf/instrument/{symbol+}:
             any:
               x-amazon-apigateway-integration:
                 httpMethod: ANY
@@ -30,4 +30,12 @@ Resources:
       Role: smf-query
       Policies:
         - AWSLambdaBasicExecutionRole
+      Events:
+        MyEndpoint:
+          Type: Api
+          Properties:
+            Path: /smf/instrument/{symbol+}
+            Method: any
+            RestApiId:
+              Ref: SearchAPI
 

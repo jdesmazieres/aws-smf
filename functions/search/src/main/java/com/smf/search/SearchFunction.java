@@ -1,5 +1,6 @@
 package com.smf.search;
 
+import com.amazonaws.http.HttpMethodName;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 import org.json.simple.JSONObject;
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @see <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-create-api-as-simple-proxy-for-lambda.html#api-gateway-proxy-integration-lambda-function-java">API Gateway proxy lambda </a>
@@ -32,10 +34,14 @@ public class SearchFunction implements RequestStreamHandler {
 		try {
 			final JSONObject event = (JSONObject) parser.parse(reader);
 			log.info("  + incoming event: \n{}", event.toJSONString());
-			responseJson.put("statusCode", "200");
-			if ("GET".equals(event.get("httpMethod"))) {
+			withCorsHeader(responseJson);
+			responseJson.put("statusCode", 200);
+			responseJson.put("isBase64Encoded", false);
+			if (HttpMethodName.GET.name()
+					.equals(event.get("httpMethod"))) {
 				getProcessor.process(event, responseJson, context);
-			} else if ("POST".equals(event.get("httpMethod"))) {
+			} else if (HttpMethodName.POST.name()
+					.equals(event.get("httpMethod"))) {
 				postProcessor.process(event, responseJson, context);
 			} else {
 				responseJson.put("statusCode", "404");
@@ -47,8 +53,15 @@ public class SearchFunction implements RequestStreamHandler {
 		}
 
 		log.info("  + output response:\n{}", responseJson.toJSONString());
-		final OutputStreamWriter writer = new OutputStreamWriter(outputStream, "UTF-8");
+		final OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
 		writer.write(responseJson.toJSONString());
 		writer.close();
+	}
+
+	private JSONObject withCorsHeader(final JSONObject responseJson) {
+		final JSONObject corsJson = new JSONObject();
+		corsJson.put("Access-Control-Allow-Origin", "*");
+		responseJson.put("headers", corsJson);
+		return responseJson;
 	}
 }
