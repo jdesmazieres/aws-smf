@@ -15,15 +15,17 @@ public class GetProcessorTest {
 	@Test
 	public void process() throws Exception {
 		final JSONObject jsonProxyEvent = (JSONObject) new JSONParser().parse(new String(Files.readAllBytes(Paths.get("src/test/resources/Get.json"))));
-		final JSONObject jsonResponse = new JSONObject();
-		final GetProcessor pxor = new GetProcessor();
-		pxor.process(jsonProxyEvent, jsonResponse, null);
+		final ProxyResponseBuilder responseBuilder = ProxyResponseBuilder.get();
+
+		new GetProcessor().process(jsonProxyEvent, responseBuilder, null);
+
+		final JSONObject jsonResponse = responseBuilder.build();
+		System.out.println(jsonResponse.toJSONString());
 		assertThat(jsonResponse.get("content-type")).isEqualTo("application/json");
 		assertThat(jsonResponse.get("body")).isNotNull();
 		final String body = (String) jsonResponse.get("body");
 		final JSONObject jsonBody = (JSONObject) new JSONParser().parse(body);
+		assertThat(jsonBody.get("processor")).isEqualTo(GetProcessor.class.getSimpleName());
 		assertThat(jsonBody.get("symbol")).isEqualTo("X12345X");
-		assertThat(jsonBody.get("processor")).isEqualTo(pxor.getClass()
-				.getSimpleName());
 	}
 }

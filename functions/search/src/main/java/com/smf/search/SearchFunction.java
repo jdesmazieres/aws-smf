@@ -21,48 +21,34 @@ public class SearchFunction implements RequestStreamHandler {
 	private static final Logger log = LoggerFactory.getLogger(SearchFunction.class);
 
 	private final JSONParser parser = new JSONParser();
-	private final GetProcessor getProcessor = new GetProcessor();
-	private final PostProcessor postProcessor = new PostProcessor();
 
 	@Override
 	public void handleRequest(final InputStream inputStream, final OutputStream outputStream, final Context context) throws IOException {
 		log.info("Executing SearchFunction.handleRequest");
 
-		final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-		final JSONObject responseJson = new JSONObject();
-		try {
+		final ProxyResponseBuilder responseJson = ProxyResponseBuilder.get();
+		try (final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
 			final JSONObject event = (JSONObject) parser.parse(reader);
 			log.info("  + incoming event: \n{}", event.toJSONString());
-			withCorsHeader(responseJson);
-			responseJson.put("statusCode", 200);
-			responseJson.put("isBase64Encoded", false);
+			responseJson.withCorsHeaders();
 			if ("GET".equals(event.get("httpMethod"))) {
-				getProcessor.process(event, responseJson, context);
+				new GetProcessor().process(event, responseJson, context);
 			} else if ("POST".equals(event.get("httpMethod"))) {
-				postProcessor.process(event, responseJson, context);
+				new PostProcessor().process(event, responseJson, context);
 			} else if ("OPTIONS".equals(event.get("httpMethod"))) {
 				// no content, only headers
 			} else {
-				responseJson.put("statusCode", 404);
-				responseJson.put("exception", "method not allowed on this url");
+				responseJson.withStatusCode(404)
+						.with("exception", "method not allowed on this url");
 			}
 		} catch (final ParseException pex) {
-			responseJson.put("statusCode", 400);
-			responseJson.put("exception", pex);
+			responseJson.withStatusCode(400)
+					.with("exception", pex);
 		}
 
 		log.info("\n-----------------------------\n  + output response:\n{}\n-----------------------------\n", responseJson.toJSONString());
 		final OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
 		writer.write(responseJson.toJSONString());
 		writer.close();
-	}
-
-	private JSONObject withCorsHeader(final JSONObject responseJson) {
-		final JSONObject corsJson = new JSONObject();
-		corsJson.put("Access-Control-Allow-Origin", "*");
-		corsJson.put("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
-		corsJson.put("Access-Control-Allow-Headers", "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token");
-		responseJson.put("headers", corsJson);
-		return responseJson;
 	}
 }

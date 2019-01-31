@@ -8,14 +8,14 @@ import org.slf4j.LoggerFactory;
 public class GetProcessor {
 	private static final Logger log = LoggerFactory.getLogger(GetProcessor.class);
 
-	public void process(final JSONObject jsonProxyEvent, final JSONObject responseJson, final Context context) {
+	public void process(final JSONObject jsonProxyEvent, final ProxyResponseBuilder responseJson, final Context context) {
 		log.info("Executing GetProcessor.process");
 
 		final JSONObject body = new JSONObject();
 		body.put("processor", getClass().getSimpleName());
 		body.put("symbol", ((JSONObject) jsonProxyEvent.get("pathParameters")).get("symbol"));
 
-		responseJson.put("content-type", "application/json");
-		responseJson.put("body", body.toJSONString());
+		responseJson.withContentType("application/json")
+				.withBody(body.toJSONString());
 	}
 }

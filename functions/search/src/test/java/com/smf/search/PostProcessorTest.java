@@ -15,15 +15,16 @@ public class PostProcessorTest {
 	@Test
 	public void process() throws Exception {
 		final JSONObject jsonProxyEvent = (JSONObject) new JSONParser().parse(new String(Files.readAllBytes(Paths.get("src/test/resources/Post.json"))));
-		final JSONObject jsonResponse = new JSONObject();
-		final PostProcessor pxor = new PostProcessor();
-		pxor.process(jsonProxyEvent, jsonResponse, null);
+		final ProxyResponseBuilder responseBuilder = ProxyResponseBuilder.get();
+
+		new PostProcessor().process(jsonProxyEvent, responseBuilder, null);
+
+		final JSONObject jsonResponse = responseBuilder.build();
 		assertThat(jsonResponse.get("content-type")).isEqualTo("application/json");
 		assertThat(jsonResponse.get("body")).isNotNull();
 		final String body = (String) jsonResponse.get("body");
 		final JSONObject jsonBody = (JSONObject) new JSONParser().parse(body);
-		assertThat(jsonBody.get("processor")).isEqualTo(pxor.getClass()
-				.getSimpleName());
+		assertThat(jsonBody.get("processor")).isEqualTo(PostProcessor.class.getSimpleName());
 		assertThat(jsonBody.get("payload")).isEqualTo("Post payload");
 	}
 }

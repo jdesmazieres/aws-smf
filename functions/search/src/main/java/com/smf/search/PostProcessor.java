@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 public class PostProcessor {
 	private static final Logger log = LoggerFactory.getLogger(PostProcessor.class);
 
-	public void process(final JSONObject jsonProxyEvent, final JSONObject responseJson, final Context context) {
+	public void process(final JSONObject jsonProxyEvent, final ProxyResponseBuilder responseJson, final Context context) {
 		log.info("Executing PostProcessor.process");
 
 		final JSONObject body = new JSONObject();
@@ -19,7 +19,7 @@ public class PostProcessor {
 		if (StringUtils.isNotBlank(payload)) {
 			body.put("payload", payload);
 		}
-		responseJson.put("content-type", "application/json");
-		responseJson.put("body", body.toJSONString());
+		responseJson.withContentType("application/json")
+				.withBody(body.toJSONString());
 	}
 }
