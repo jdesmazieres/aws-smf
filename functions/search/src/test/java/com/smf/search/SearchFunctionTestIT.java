@@ -29,10 +29,8 @@ public class SearchFunctionTestIT {
 		final String resultJson = new String(resultPayload.array(), StandardCharsets.UTF_8);
 		final JSONObject payload = (JSONObject) parser.parse(resultJson);
 
-		System.out.println(payload);
 		assertThat(payload.get("statusCode")).isEqualTo(404L);
 		assertThat(payload.get("exception")).isEqualTo("method not allowed on this url");
-
 	}
 
 	@Test
@@ -49,9 +47,7 @@ public class SearchFunctionTestIT {
 		final String resultJson = new String(resultPayload.array(), StandardCharsets.UTF_8);
 		final JSONObject payload = (JSONObject) parser.parse(resultJson);
 
-		System.out.println(payload);
 		assertThat(payload.get("statusCode")).isEqualTo(200L);
 		assertThat(payload.get("body")).isEqualTo("{\"symbol\":\"00947458\",\"processor\":\"GetProcessor\"}");
-
 	}
 }

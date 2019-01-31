@@ -51,7 +51,7 @@ public class SearchFunction implements RequestStreamHandler {
 			responseJson.put("exception", pex);
 		}
 
-		log.info("-----------------------------\n  + output response:\n{}\n-----------------------------\n", responseJson.toJSONString());
+		log.info("\n-----------------------------\n  + output response:\n{}\n-----------------------------\n", responseJson.toJSONString());
 		final OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
 		writer.write(responseJson.toJSONString());
 		writer.close();

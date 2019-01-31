@@ -103,7 +103,25 @@
                                 <argument>local</argument>
                                 <argument>start-lambda</argument>
                                 <argument>-l</argument>
-                                <argument>target/sam-invoke-local.log</argument>
+                                <argument>target/sam-local-lambda.log</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>sam-local-start-api</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>sam</executable>
+                            <async>true</async>
+                            <asyncDestroyOnShutdown>true</asyncDestroyOnShutdown>
+                            <arguments>
+                                <argument>local</argument>
+                                <argument>start-api</argument>
+                                <argument>-l</argument>
+                                <argument>target/sam-local-api.log</argument>
                             </arguments>
                         </configuration>
                     </execution>

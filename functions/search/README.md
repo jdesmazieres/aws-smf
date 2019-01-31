@@ -23,3 +23,6 @@ Lambda function to search for an instrument in the backend ElasticSearch databas
 * starts a local instance of the lambdas and execute integration tests on it
 > mvn integration-test
 * next step: start an instance of the api gateway and do integration tests on lambda (direct access) and api gateway
+
+## Cloudformation template
+(https://github.com/seraphjiang/aws-cors-cloudformation/blob/master/cloudformation.yaml)
