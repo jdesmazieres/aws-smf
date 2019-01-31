@@ -24,7 +24,7 @@
     "X-Forwarded-Proto": "https"
   },
   "pathParameters": {
-    "proxy": "00947458"
+    "symbol": "00947458"
   },
   "stageVariables": {
     "stageVariableName": "stageVariableValue"
@@ -47,7 +47,7 @@
       "userAgent": "PostmanRuntime/2.4.5",
       "user": null
     },
-    "resourcePath": "/{proxy+}",
+    "resourcePath": "/{symbol+}",
     "httpMethod": "GET",
     "apiId": "gy415nuibc"
   }

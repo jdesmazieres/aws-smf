@@ -9,7 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static io.restassured.RestAssured.given;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class SearchFunctionAPIGatewayTestIT {
 	private static RequestSpecification spec;
@@ -36,26 +36,24 @@ public class SearchFunctionAPIGatewayTestIT {
 
 	@Test
 	public void testGet() throws Exception {
-		final String response = given().spec(spec)
+		given().spec(spec)
 				.when()
 				.get("smf/instrument/ABCDEFG/")
 				.then()
 				.statusCode(200)
-				.extract()
-				.asString();
-		assertThat(response).isEqualToIgnoringCase("Output from GetProcessor: symbol=ABCDEFG");
+				.content("processor", is(GetProcessor.class.getSimpleName()))
+				.content("symbol", is("ABCDEFG"));
 	}
 
 	@Test
 	public void testGet2() throws Exception {
-		final String response = given().spec(spec)
+		given().spec(spec)
 				.when()
 				.get("smf/instrument/ABCDEFG")
 				.then()
 				.statusCode(200)
-				.extract()
-				.asString();
-		assertThat(response).isEqualToIgnoringCase("Output from GetProcessor: symbol=ABCDEFG");
+				.content("processor", is(GetProcessor.class.getSimpleName()))
+				.content("symbol", is("ABCDEFG"));
 	}
 
 	@Test
@@ -69,27 +67,24 @@ public class SearchFunctionAPIGatewayTestIT {
 
 	@Test
 	public void testPost() throws Exception {
-		final String response = given().spec(spec)
+		given().spec(spec)
 				.when()
 				.post("smf/instrument/")
 				.then()
 				.statusCode(200)
-				.extract()
-				.asString();
-		assertThat(response).isEqualToIgnoringCase("Output from PostProcessor");
+				.content("processor", is(PostProcessor.class.getSimpleName()));
 	}
 
 
 	@Test
 	public void testPostWithPayload() throws Exception {
-		final String response = given().spec(spec)
+		given().spec(spec)
 				.body("Post payload")
 				.when()
 				.post("smf/instrument/")
 				.then()
 				.statusCode(200)
-				.extract()
-				.asString();
-		assertThat(response).isEqualToIgnoringCase("Output from PostProcessor. body: Post payload");
+				.content("processor", is(PostProcessor.class.getSimpleName()))
+				.content("payload", is("Post payload"));
 	}
 }

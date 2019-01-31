@@ -30,7 +30,7 @@ public class SearchFunctionTestIT {
 		final JSONObject payload = (JSONObject) parser.parse(resultJson);
 
 		System.out.println(payload);
-		assertThat(payload.get("statusCode")).isEqualTo("404");
+		assertThat(payload.get("statusCode")).isEqualTo(404L);
 		assertThat(payload.get("exception")).isEqualTo("method not allowed on this url");
 
 	}
@@ -50,8 +50,8 @@ public class SearchFunctionTestIT {
 		final JSONObject payload = (JSONObject) parser.parse(resultJson);
 
 		System.out.println(payload);
-		assertThat(payload.get("statusCode")).isEqualTo("200");
-		assertThat(payload.get("body")).isEqualTo("Output from GetProcessor");
+		assertThat(payload.get("statusCode")).isEqualTo(200L);
+		assertThat(payload.get("body")).isEqualTo("{\"symbol\":\"00947458\",\"processor\":\"GetProcessor\"}");
 
 	}
 }

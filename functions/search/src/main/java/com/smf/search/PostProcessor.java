@@ -12,12 +12,14 @@ public class PostProcessor {
 	public void process(final JSONObject jsonProxyEvent, final JSONObject responseJson, final Context context) {
 		log.info("Executing PostProcessor.process");
 
-		final String body = (String) jsonProxyEvent.get("body");
+		final JSONObject body = new JSONObject();
+		body.put("processor", getClass().getSimpleName());
 
-		if (StringUtils.isBlank(body)) {
-			responseJson.put("body", "Output from PostProcessor");
-		} else {
-			responseJson.put("body", "Output from PostProcessor. body: " + body);
+		final String payload = (String) jsonProxyEvent.get("body");
+		if (StringUtils.isNotBlank(payload)) {
+			body.put("payload", payload);
 		}
+		responseJson.put("content-type", "application/json");
+		responseJson.put("body", body.toJSONString());
 	}
 }
