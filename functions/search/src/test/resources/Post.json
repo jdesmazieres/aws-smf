@@ -1,0 +1,44 @@
+{
+  "headers": {
+    "Accept": "application\/json, application\/javascript, text\/javascript, text\/json",
+    "Connection": "Keep-Alive",
+    "User-Agent": "Apache-HttpClient\/4.5.5 (Java\/10.0.1)",
+    "X-Forwarded-Proto": "http",
+    "Host": "localhost:3000",
+    "Accept-Encoding": "gzip,deflate",
+    "Content-Length": "12",
+    "X-Forwarded-Port": "3000",
+    "Content-Type": "application\/json; charset=UTF-8"
+  },
+  "pathParameters": null,
+  "path": "\/smf\/instrument\/",
+  "isBase64Encoded": false,
+  "requestContext": {
+    "accountId": "123456789012",
+    "path": "\/smf\/instrument\/",
+    "resourceId": "123456",
+    "stage": "prod",
+    "requestId": "c6af9ac6-7b61-11e6-9a41-93e8deadbeef",
+    "identity": {
+      "cognitoIdentityPoolId": null,
+      "accountId": null,
+      "caller": null,
+      "apiKey": null,
+      "sourceIp": "127.0.0.1",
+      "cognitoAuthenticationType": null,
+      "cognitoAuthenticationProvider": null,
+      "userArn": null,
+      "userAgent": "Custom User Agent String",
+      "user": null
+    },
+    "resourcePath": "\/smf\/instrument\/",
+    "httpMethod": "POST",
+    "extendedRequestId": null,
+    "apiId": "1234567890"
+  },
+  "resource": "\/smf\/instrument\/",
+  "httpMethod": "POST",
+  "body": "Post payload",
+  "queryStringParameters": null,
+  "stageVariables": null
+}

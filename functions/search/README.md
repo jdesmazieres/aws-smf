@@ -18,6 +18,8 @@ Lambda function to search for an instrument in the backend ElasticSearch databas
 > sam local start-api [--template-name template.yaml]
 
 ## Maven Integration tests
+* Lambda integration tests unsing aws java core generic lambda client
+* API Gateway integration tests using REST-assert (https://phauer.com/2016/testing-restful-services-java-best-practices/)
 * starts a local instance of the lambdas and execute integration tests on it
 > mvn integration-test
 * next step: start an instance of the api gateway and do integration tests on lambda (direct access) and api gateway

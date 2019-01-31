@@ -11,8 +11,16 @@ Resources:
           title:
             Ref: AWS::StackName
         paths:
-          /smf/instrument/{symbol+}:
-            any:
+          /smf/instrument/{symbol+}/:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: ANY
+                type: aws_proxy
+                uri:
+                  !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SearchFunction.Arn}/invocations
+              responses: {}
+          /smf/instrument/:
+            post:
               x-amazon-apigateway-integration:
                 httpMethod: ANY
                 type: aws_proxy
@@ -31,11 +39,18 @@ Resources:
       Policies:
         - AWSLambdaBasicExecutionRole
       Events:
-        MyEndpoint:
+        GetEndpoint:
           Type: Api
           Properties:
-            Path: /smf/instrument/{symbol+}
-            Method: any
+            Path: /smf/instrument/{symbol+}/
+            Method: GET
+            RestApiId:
+              Ref: SearchAPI
+        PostEndpoint:
+          Type: Api
+          Properties:
+            Path: /smf/instrument/
+            Method: POST
             RestApiId:
               Ref: SearchAPI
 

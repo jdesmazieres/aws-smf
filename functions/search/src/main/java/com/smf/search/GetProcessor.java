@@ -11,6 +11,6 @@ public class GetProcessor {
 	public void process(final JSONObject jsonProxyEvent, final JSONObject responseJson, final Context context) {
 		log.info("Executing GetProcessor.process");
 
-		responseJson.put("body", "Output from GetProcessor");
+		responseJson.put("body", "Output from GetProcessor: symbol=" + ((JSONObject) jsonProxyEvent.get("pathParameters")).get("symbol"));
 	}
 }

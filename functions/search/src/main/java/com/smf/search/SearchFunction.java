@@ -43,12 +43,15 @@ public class SearchFunction implements RequestStreamHandler {
 			} else if (HttpMethodName.POST.name()
 					.equals(event.get("httpMethod"))) {
 				postProcessor.process(event, responseJson, context);
+			} else if (HttpMethodName.OPTIONS.name()
+					.equals(event.get("httpMethod"))) {
+				// no content, only headers
 			} else {
-				responseJson.put("statusCode", "404");
+				responseJson.put("statusCode", 404);
 				responseJson.put("exception", "method not allowed on this url");
 			}
 		} catch (final ParseException pex) {
-			responseJson.put("statusCode", "400");
+			responseJson.put("statusCode", 400);
 			responseJson.put("exception", pex);
 		}
 
@@ -61,6 +64,8 @@ public class SearchFunction implements RequestStreamHandler {
 	private JSONObject withCorsHeader(final JSONObject responseJson) {
 		final JSONObject corsJson = new JSONObject();
 		corsJson.put("Access-Control-Allow-Origin", "*");
+		corsJson.put("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+		corsJson.put("Access-Control-Allow-Headers", "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token");
 		responseJson.put("headers", corsJson);
 		return responseJson;
 	}

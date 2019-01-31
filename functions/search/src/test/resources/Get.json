@@ -1,0 +1,48 @@
+{
+  "headers": {
+    "Cache-Control": "max-age=0",
+    "Accept": "text\/html,application\/xhtml+xml,application\/xml;q=0.9,image\/webp,image\/apng,*\/*;q=0.8",
+    "Upgrade-Insecure-Requests": "1",
+    "Connection": "keep-alive",
+    "User-Agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/71.0.3578.98 Safari\/537.36",
+    "X-Forwarded-Proto": "http",
+    "Host": "127.0.0.1:3000",
+    "Dnt": "1",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Accept-Language": "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7",
+    "X-Forwarded-Port": "3000"
+  },
+  "pathParameters": {
+    "symbol": "X12345X"
+  },
+  "path": "\/smf\/instrument\/X12345X\/",
+  "isBase64Encoded": false,
+  "requestContext": {
+    "accountId": "123456789012",
+    "path": "\/smf\/instrument\/{symbol+}\/",
+    "resourceId": "123456",
+    "stage": "prod",
+    "requestId": "c6af9ac6-7b61-11e6-9a41-93e8deadbeef",
+    "identity": {
+      "cognitoIdentityPoolId": null,
+      "accountId": null,
+      "caller": null,
+      "apiKey": null,
+      "sourceIp": "127.0.0.1",
+      "cognitoAuthenticationType": null,
+      "cognitoAuthenticationProvider": null,
+      "userArn": null,
+      "userAgent": "Custom User Agent String",
+      "user": null
+    },
+    "resourcePath": "\/smf\/instrument\/{symbol+}\/",
+    "httpMethod": "GET",
+    "extendedRequestId": null,
+    "apiId": "1234567890"
+  },
+  "resource": "\/smf\/instrument\/{symbol+}\/",
+  "httpMethod": "GET",
+  "body": null,
+  "queryStringParameters": null,
+  "stageVariables": null
+}
