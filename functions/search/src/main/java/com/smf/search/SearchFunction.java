@@ -1,6 +1,5 @@
 package com.smf.search;
 
-import com.amazonaws.http.HttpMethodName;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 import org.json.simple.JSONObject;
@@ -37,14 +36,11 @@ public class SearchFunction implements RequestStreamHandler {
 			withCorsHeader(responseJson);
 			responseJson.put("statusCode", 200);
 			responseJson.put("isBase64Encoded", false);
-			if (HttpMethodName.GET.name()
-					.equals(event.get("httpMethod"))) {
+			if ("GET".equals(event.get("httpMethod"))) {
 				getProcessor.process(event, responseJson, context);
-			} else if (HttpMethodName.POST.name()
-					.equals(event.get("httpMethod"))) {
+			} else if ("POST".equals(event.get("httpMethod"))) {
 				postProcessor.process(event, responseJson, context);
-			} else if (HttpMethodName.OPTIONS.name()
-					.equals(event.get("httpMethod"))) {
+			} else if ("OPTIONS".equals(event.get("httpMethod"))) {
 				// no content, only headers
 			} else {
 				responseJson.put("statusCode", 404);
